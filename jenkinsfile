@@ -13,9 +13,10 @@ pipeline {
             steps {
                 // Navigate to the cloned repository directory
                 sh 'ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.156.64.233'
-                sh 'cd ${WORKSPACE}'
+                sh 'cd ~'
                 
                 // Update package lists and install Node.js and npm (for Ubuntu)
+                sh ' touch jenkins.test'
                 sh ' apt update -y'
                 sh ' apt install nodejs npm -y'
                 
