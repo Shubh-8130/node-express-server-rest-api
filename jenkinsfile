@@ -16,7 +16,7 @@ pipeline {
                     // Execute commands on the remote server
                     sh '''
                         ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.156.64.233 '
-                            cd /path/to/your/app
+                            cd ~/node-express-server-rest-api
                             sudo apt update -y
                             sudo apt install nodejs npm -y
                             npm install -y
