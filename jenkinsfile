@@ -13,17 +13,16 @@ pipeline {
             steps {
                 // Connect to the server using SSH and execute commands
                 script {
-                    sshCommand remote: [
-                        host: '54.156.64.233',
-                        user: 'ubuntu',
-                        identityFile: '/Users/shubhamsharma/jenkins/my-key-terr.pem'
-                    ], command: '''
-                        cd ~/node-express-server-rest-api
-                        sudo apt update -y
-                        sudo apt install nodejs npm -y
-                        npm install -y
-                        npm update -y
-                        npm start -y
+                    // Execute commands on the remote server
+                    sh '''
+                        ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.156.64.233 '
+                            cd /path/to/your/app
+                            sudo apt update -y
+                            sudo apt install nodejs npm -y
+                            npm install -y
+                            npm update -y
+                            npm start -y
+                        '
                     '''
                 }
             }
