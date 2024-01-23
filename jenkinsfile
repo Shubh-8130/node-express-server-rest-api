@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code from your repository
+                echo 'Checking out code...'
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/Shubh-8130/node-express-server-rest-api.git']]])
+            }
+        }
+        
+        stage('Build and Deploy') {
+            steps {
+                // Allocate workspace and execute on any available agent
+                node('any') {
+                    // Navigate to the cloned repository directory
+                    sh 'cd ${WORKSPACE}'
+                    
+                    // Update package lists and install Node.js and npm (for Ubuntu)
+                    sh 'sudo apt update -y'
+                    sh 'sudo apt install nodejs npm -y'
+                    
+                    // Install dependencies
+                    sh 'npm install -y'
+                    
+                    // Update npm packages
+                    sh 'npm update -y'
+                    
+                    // Start the application
+                    sh 'npm start -y'
+                }
+            }
+        }
+    }
+}
