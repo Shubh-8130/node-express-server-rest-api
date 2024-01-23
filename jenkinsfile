@@ -15,15 +15,7 @@ pipeline {
                             sudo apt install nodejs npm -y
                             npm install -y
                             npm update -y
-                            '
-                        """
-                    }
-                }
-            }
-            stage('Start Application') {
-                steps {
-                    script {
-                        def npmStartOutput = sh(script: 'npm start', returnStatus: true).trim()
+                            def npmStartOutput = sh(script: 'npm start', returnStatus: true).trim()
 
                         // Check if the output contains a specific success message
                         if (npmStartOutput.contains('Example app listening on port 3000!')) {
@@ -32,6 +24,8 @@ pipeline {
                             currentBuild.result = 'FAILURE'
                             error("npm start failed with the following output: ${npmStartOutput}")
                         }
+                            '
+                        """
                     }
                 }
             }
