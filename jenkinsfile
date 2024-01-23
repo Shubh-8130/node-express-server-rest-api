@@ -5,29 +5,27 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the code from your repository
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: 'https://github.com/Shubh-8130/node-express-server-rest-api.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/Shubh-8130/node-express-server-rest-api.git']]])
             }
         }
         
         stage('Build and Deploy') {
             steps {
-                // Navigate to the cloned repository directory
-                sh 'ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.156.64.233'
-                sh 'cd ~'
-                
-                // Update package lists and install Node.js and npm (for Ubuntu)
-                sh ' touch jenkins.test'
-                sh ' apt update -y'
-                sh ' apt install nodejs npm -y'
-                
-                // Install dependencies
-                sh 'npm install -y'
-                
-                // Update npm packages
-                sh 'npm update -y'
-                
-                // Start the application
-                sh 'npm start -y'
+                // Connect to the server using SSH and execute commands
+                script {
+                    sshCommand remote: [
+                        host: '54.156.64.233',
+                        user: 'ubuntu',
+                        identityFile: '/Users/shubhamsharma/jenkins/my-key-terr.pem'
+                    ], command: '''
+                        cd ~/node-express-server-rest-api
+                        sudo apt update -y
+                        sudo apt install nodejs npm -y
+                        npm install -y
+                        npm update -y
+                        npm start -y
+                    '''
+                }
             }
         }
     }
