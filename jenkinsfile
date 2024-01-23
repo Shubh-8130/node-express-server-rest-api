@@ -16,8 +16,8 @@ pipeline {
                 sh 'cd ${WORKSPACE}'
                 
                 // Update package lists and install Node.js and npm (for Ubuntu)
-                sh 'sudo apt update -y'
-                sh 'sudo apt install nodejs npm -y'
+                sh ' apt update -y'
+                sh ' apt install nodejs npm -y'
                 
                 // Install dependencies
                 sh 'npm install -y'
