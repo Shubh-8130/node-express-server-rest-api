@@ -7,16 +7,15 @@ pipeline {
                     script {
                         // Execute commands on the remote server
                         sh '''
-                            ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.156.64.233'
-                                cd ~
-                                git clone https://github.com/Shubh-8130/node-express-server-rest-api.git
-                                cd ~/node-express-server-rest-api
-                                sudo apt update -y
-                                sudo apt install nodejs npm -y
-                                npm install -y
-                                npm update -y
-                                npm start
-                                '
+                            ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.156.64.233
+                            cd ~
+                            git clone https://github.com/Shubh-8130/node-express-server-rest-api.git
+                            cd ~/node-express-server-rest-api
+                            sudo apt update -y
+                            sudo apt install nodejs npm -y
+                            npm install -y
+                            npm update -y
+                            npm start
                         '''
                     }
                 }
