@@ -1,13 +1,5 @@
 pipeline {
     agent any
-    
-    #stages {
-    #   stage('Checkout') {
-    #        steps {
-    #            // Checkout the code from your repository
-    #            checkout([$class: 'GitSCM', branches: [[name: 'master']], userRemoteConfigs: [[url: 'https://github.com/Shubh-8130/node-express-server-rest-api.git']]])
-    #        }
-    #    }
         
         stage('Build and Deploy') {
             steps {
