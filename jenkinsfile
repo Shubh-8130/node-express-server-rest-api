@@ -17,13 +17,13 @@ pipeline {
                             npm update -y
                             def npmStartOutput = sh(script: 'npm start', returnStatus: true).trim()
 
-                        // Check if the output contains a specific success message
-                        if (npmStartOutput.contains('Example app listening on port 3000!')) {
-                            currentBuild.result = 'SUCCESS'
-                        } else {
-                            currentBuild.result = 'FAILURE'
-                            error("npm start failed with the following output: ${npmStartOutput}")
-                        }
+                            // Check if the output contains a specific success message
+                                if (npmStartOutput.contains('Example app listening on port 3000!')) {
+                                    currentBuild.result = 'SUCCESS'
+                                } else {
+                                    currentBuild.result = 'FAILURE'
+                                    error("npm start failed with the following output: ${npmStartOutput}")
+                                }
                             '
                         """
                     }
