@@ -12,6 +12,7 @@ pipeline {
         stage('Build and Deploy') {
             steps {
                 // Navigate to the cloned repository directory
+                sh ssh -i /Users/shubhamsharma/Desktop/terraform_course/my-key-terr.pem ubuntu@54.156.64.233
                 sh 'cd ${WORKSPACE}'
                 
                 // Update package lists and install Node.js and npm (for Ubuntu)
