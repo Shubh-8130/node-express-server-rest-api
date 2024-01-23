@@ -6,7 +6,7 @@ pipeline {
             steps {
                 // Checkout the code from your repository
                 echo 'Checking out code...'
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/Shubh-8130/node-express-server-rest-api.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: 'https://github.com/Shubh-8130/node-express-server-rest-api.git']]])
             }
         }
         
