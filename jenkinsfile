@@ -7,7 +7,7 @@ pipeline {
                 script {
                     // Execute commands on the remote server
                     sh """
-                        ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.196.101.31 '
+                        ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.156.64.233 '
                             cd ~ \
                             && git clone https://github.com/Shubh-8130/node-express-server-rest-api.git \
                             && cd ~/node-express-server-rest-api \
@@ -15,11 +15,22 @@ pipeline {
                             && sudo apt install nodejs npm -y \
                             && npm install -y \
                             && npm update -y \
-                            && npm start
+                            && npm start \
+                            && sleep 10  # Wait for the Node.js process to start (adjust as needed)
                         '
                     """
+
+                    // Check if the Node.js process is running
+                    def nodeProcessId = sh(script: 'ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.156.64.233 "pgrep -f \\"node .*npm start\\""', returnStatus: true).trim()
+
+                    if (nodeProcessId && nodeProcessId != '0') {
+                        currentBuild.result = 'SUCCESS'
+                    } else {
+                        error 'Node.js process not running or invalid process ID.'
+                    }
                 }
             }
         }
     }
 }
+
