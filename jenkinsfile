@@ -7,7 +7,7 @@ pipeline {
                 script {
                     // Execute commands on the remote server
                     sh """
-                        ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.156.64.233 '
+                        ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.196.101.31 '
                             cd ~ \
                             && git clone https://github.com/Shubh-8130/node-express-server-rest-api.git \
                             && cd ~/node-express-server-rest-api \
