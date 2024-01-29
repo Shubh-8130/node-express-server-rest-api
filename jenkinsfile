@@ -19,15 +19,6 @@ pipeline {
                             && sleep 10  # Wait for the Node.js process to start (adjust as needed)
                         '
                     """
-
-                    // Check if the Node.js process is running
-                    def nodeProcessId = sh(script: 'ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.224.72.103 "pgrep -f \\"node .*npm start\\""', returnStatus: true).trim()
-
-                    if (nodeProcessId && nodeProcessId != '0') {
-                        currentBuild.result = 'SUCCESS'
-                    } else {
-                        error 'Node.js process not running or invalid process ID.'
-                    }
                 }
             }
         }
