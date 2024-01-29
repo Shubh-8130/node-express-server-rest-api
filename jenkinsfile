@@ -7,7 +7,7 @@ pipeline {
                 script {
                     // Execute commands on the remote server
                     sh """
-                        ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.196.101.31 '
+                        ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.224.72.103 '
                             cd ~ \
                             && git clone https://github.com/Shubh-8130/node-express-server-rest-api.git \
                             && cd ~/node-express-server-rest-api \
@@ -21,7 +21,7 @@ pipeline {
                     """
 
                     // Check if the Node.js process is running
-                    def nodeProcessId = sh(script: 'ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.196.101.31 "pgrep -f \\"node .*npm start\\""', returnStatus: true).trim()
+                    def nodeProcessId = sh(script: 'ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.224.72.103 "pgrep -f \\"node .*npm start\\""', returnStatus: true).trim()
 
                     if (nodeProcessId && nodeProcessId != '0') {
                         currentBuild.result = 'SUCCESS'
