@@ -37,13 +37,15 @@ pipeline {
                         '
                     """
                 }
-                // Check if the build was successful
-                def nid = sh(script: 'ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.156.64.233 "pgrep -f \\"node .*npm start\\""', returnStdout: true).trim()
+                script {
+                    // Check if the node process is running
+                    def nid = sh(script: 'ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.156.64.233 "pgrep -f \\"node .*npm start\\""', returnStdout: true).trim()
 
-                if (nid != "0") {
-                    echo "Build is success"
-                } else {
-                    error "Build failure"
+                    if (nid && nid != '0') {
+                        currentBuild.result = 'SUCCESS'
+                    } else {
+                        error 'Node.js process not running or invalid process ID.'
+                    }
                 }
             }
         }
