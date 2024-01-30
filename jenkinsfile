@@ -5,6 +5,7 @@ pipeline {
         REPOSITORY_URL = 'https://github.com/Shubh-8130/node-express-server-rest-api.git'
         SSH_KEY_PATH = '/Users/shubhamsharma/jenkins/my-key-terr.pem'
         REMOTE_HOST = 'ubuntu@54.224.72.103'
+        NPM_START_TIMEOUT = 180  // Set a reasonable timeout value in seconds
     }
     stages {
         stage('Build and Deploy') {
@@ -37,22 +38,38 @@ pipeline {
                             sudo apt install nodejs npm -y
                             npm install -y
                             npm update -y
-                            npm start
-                            sleep 10  # Wait for the Node.js process to start (adjust as needed)
+                            npm start &
                         '
                     """
                     
-                    // Check if the node process is running
-                    def nid = sh(script: 'ssh -i ${env.SSH_KEY_PATH} ${env.REMOTE_HOST} "pgrep -f \\"node .*npm start\\""', returnStdout: true).trim()
+                    // Wait for npm start to complete within the specified timeout
+                    def npmStartCompleted = waitForNpmStart()
 
-                    if (nid && nid != '0') {
+                    if (npmStartCompleted) {
                         currentBuild.result = 'SUCCESS'
                     } else {
-                        error 'Node.js process not running or invalid process ID.'
-                        exit 1
+                        error 'Failed to start Node.js within the specified timeout.'
                     }
                 }
             }
         }
     }
+}
+
+def waitForNpmStart() {
+    def startTime = currentBuild.startTimeInMillis
+    def timeoutMillis = env.NPM_START_TIMEOUT * 1000
+    def endTime = startTime + timeoutMillis
+    def intervalMillis = 5000  // Check every 5 seconds
+
+    while (System.currentTimeMillis() < endTime) {
+        def nid = sh(script: 'ssh -i ${env.SSH_KEY_PATH} ${env.REMOTE_HOST} "pgrep -f \\"node .*npm start\\""', returnStdout: true).trim()
+        if (nid && nid != '0') {
+            return true  // npm start has started successfully
+        }
+
+        sleep intervalMillis
+    }
+
+    return false  // Timeout reached without npm start completing
 }
