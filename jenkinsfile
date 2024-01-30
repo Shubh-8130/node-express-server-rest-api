@@ -39,13 +39,14 @@ pipeline {
                             npm update -y
                             npm start
                             sleep 10  # Wait for the Node.js process to start (adjust as needed)
+                            exit
                         '
                     """
                     
                     // Check if the node process is running
                     def nid = sh(script: 'ssh -i ${env.SSH_KEY_PATH} ${env.REMOTE_HOST} "pgrep -f \\"node .*npm start\\""', returnStdout: true).trim()
 
-                    if (nid && nid == '0') {
+                    if (nid && nid != '0') {
                         currentBuild.result = 'SUCCESS'
                     } else {
                         error 'Node.js process not running or invalid process ID.'
