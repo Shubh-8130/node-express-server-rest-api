@@ -38,7 +38,7 @@ pipeline {
                             sudo apt install nodejs npm -y
                             npm install -y
                             npm update -y
-                            npm start &
+                            nohup npm start > npm_start.log 2>&1 &
                         '
                     """
                     
