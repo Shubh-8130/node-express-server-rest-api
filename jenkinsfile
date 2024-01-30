@@ -59,7 +59,7 @@ pipeline {
 def waitForNpmStart() {
     def startTime = currentBuild.startTimeInMillis
     def timeoutMillis = env.NPM_START_TIMEOUT * 1000
-    def endTime = startTime + timeoutMillis
+    def endTime = startTime + timeoutMillis as Long  // Explicitly convert to Long
     def intervalMillis = 5000  // Check every 5 seconds
 
     while (System.currentTimeMillis() < endTime) {
@@ -73,3 +73,4 @@ def waitForNpmStart() {
 
     return false  // Timeout reached without npm start completing
 }
+
