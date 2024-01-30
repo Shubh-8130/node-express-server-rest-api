@@ -3,15 +3,15 @@ pipeline {
     stages {
         stage('Build and Deploy') {
             steps {
-                // Connect to the server using SSH and execute commands
                 script {
-                    // Execute commands on the remote server
+                    // Connect to the server using SSH and execute commands
                     sh """
                         ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.224.72.103 '
                             # Define the directory name and repository URL
                             directory_name=node-express-server-rest-api
                             repository_url=https://github.com/Shubh-8130/node-express-server-rest-api.git
                             cd ~
+
                             # Check if the directory exists
                             if [ -d "$directory_name" ]; then
                                 # If the directory exists, delete it
@@ -22,12 +22,11 @@ pipeline {
                             # Clone the repository
                             echo "Cloning repository into $directory_name"
                             git clone "$repository_url" "$directory_name"
+                            cd "$directory_name"
 
                             # Additional commands or operations can be added here if needed
 
                             echo "Process completed successfully."
-                            git clone https://github.com/Shubh-8130/node-express-server-rest-api.git
-                            cd ~/node-express-server-rest-api
                             sudo apt update -y
                             sudo apt install nodejs npm -y
                             npm install -y
@@ -36,8 +35,7 @@ pipeline {
                             sleep 10  # Wait for the Node.js process to start (adjust as needed)
                         '
                     """
-                }
-                script {
+                    
                     // Check if the node process is running
                     def nid = sh(script: 'ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.224.72.103 "pgrep -f \\"node .*npm start\\""', returnStdout: true).trim()
 
@@ -51,5 +49,3 @@ pipeline {
         }
     }
 }
-
-
