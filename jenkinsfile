@@ -30,14 +30,12 @@ pipeline {
                             git clone "$repository_url" "$directory_name"
                             cd "$directory_name"
 
-                            # Additional commands or operations can be added here if needed
-                            pid=\$(lsof -i :3000 | awk 'NR==2 {print \$2}')
-                            echo "The PID is: \$pid"
-                            echo "Killing the previous pid . . ."
-                            echo " . . . . ."
-                            echo " . . . . ."
+                            // Additional commands or operations can be added here if needed
+                            def pid = sh(script: 'lsof -i :3000 | awk \'NR==2 {print $2}\'', returnStdout: true).trim()
+                            echo "The PID is: $pid"
+                            echo "Killing the previous PID..."
+                            sh "kill -9 $pid"
 
-                            kill -9 \$pid
 
                             echo "Process completed successfully."
                             sudo apt update -y
