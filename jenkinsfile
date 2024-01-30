@@ -49,6 +49,7 @@ pipeline {
                         currentBuild.result = 'SUCCESS'
                     } else {
                         error 'Node.js process not running or invalid process ID.'
+                        exit 1
                     }
                 }
             }
