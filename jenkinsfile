@@ -1,15 +1,21 @@
 pipeline {
     agent any
+    environment {
+        DIRECTORY_NAME = 'node-express-server-rest-api'
+        REPOSITORY_URL = 'https://github.com/Shubh-8130/node-express-server-rest-api.git'
+        SSH_KEY_PATH = '/Users/shubhamsharma/jenkins/my-key-terr.pem'
+        REMOTE_HOST = 'ubuntu@54.224.72.103'
+    }
     stages {
         stage('Build and Deploy') {
             steps {
                 script {
                     // Connect to the server using SSH and execute commands
                     sh """
-                        ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.224.72.103 '
+                        ssh -i ${env.SSH_KEY_PATH} ${env.REMOTE_HOST} '
                             # Define the directory name and repository URL
-                            directory_name=node-express-server-rest-api
-                            repository_url=https://github.com/Shubh-8130/node-express-server-rest-api.git
+                            directory_name=${env.DIRECTORY_NAME}
+                            repository_url=${env.REPOSITORY_URL}
                             cd ~
 
                             # Check if the directory exists
@@ -37,7 +43,7 @@ pipeline {
                     """
                     
                     // Check if the node process is running
-                    def nid = sh(script: 'ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.224.72.103 "pgrep -f \\"node .*npm start\\""', returnStdout: true).trim()
+                    def nid = sh(script: 'ssh -i ${env.SSH_KEY_PATH} ${env.REMOTE_HOST} "pgrep -f \\"node .*npm start\\""', returnStdout: true).trim()
 
                     if (nid && nid != '0') {
                         currentBuild.result = 'SUCCESS'
