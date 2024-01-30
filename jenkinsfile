@@ -38,7 +38,7 @@ pipeline {
                     """
                 }
                 // Check if the build was successful
-                def nid = sh(script: 'pgrep -x node', returnStdout: true).trim()
+                def nid = sh(script: 'ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.156.64.233 "pgrep -f \\"node .*npm start\\""', returnStdout: true).trim()
 
                 if (nid != "0") {
                     echo "Build is success"
