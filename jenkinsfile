@@ -4,7 +4,7 @@ pipeline {
         DIRECTORY_NAME = 'node-express-server-rest-api'
         REPOSITORY_URL = 'https://github.com/Shubh-8130/node-express-server-rest-api.git'
         SSH_KEY_PATH = '/Users/shubhamsharma/jenkins/my-key-terr.pem'
-        REMOTE_HOST = 'ubuntu@54.224.72.103'
+        REMOTE_HOST = 'ubuntu@52.207.223.9'
         NPM_START_TIMEOUT = 180  // Set a reasonable timeout value in seconds
     }
     stages {
