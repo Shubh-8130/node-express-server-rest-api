@@ -31,10 +31,11 @@ pipeline {
                             cd "$directory_name"
 
                             // Additional commands or operations can be added here if needed
-                            def pid = sh(script: 'lsof -i :3000 | awk \'NR==2 {print $2}\'', returnStdout: true).trim()
+                            def pid = sh(script: "lsof -i :3000 | awk 'NR==2 {print \$2}'", returnStdout: true).trim()
                             echo "The PID is: $pid"
                             echo "Killing the previous PID..."
                             sh "kill -9 $pid"
+
 
 
 
