@@ -9,36 +9,45 @@ pipeline {
                     sh """
                         ssh -i /Users/shubhamsharma/jenkins/my-key-terr.pem ubuntu@54.224.72.103 '
                             # Define the directory name and repository URL
-                            && directory_name=node-express-server-rest-api \
-                            && repository_url=https://github.com/Shubh-8130/node-express-server-rest-api.git \
-                            && cd ~ \
+                            directory_name=node-express-server-rest-api
+                            repository_url=https://github.com/Shubh-8130/node-express-server-rest-api.git
+                            cd ~
                             # Check if the directory exists
-                            && if [ -d "$directory_name" ]; then
+                            if [ -d "$directory_name" ]; then
                                 # If the directory exists, delete it
                                 echo "Deleting existing directory: $directory_name"
                                 rm -rf "$directory_name"
-                            && fi
+                            fi
 
                             # Clone the repository
-                            && echo "Cloning repository into $directory_name"
-                            && git clone "$repository_url" "$directory_name"
+                            echo "Cloning repository into $directory_name"
+                            git clone "$repository_url" "$directory_name"
 
                             # Additional commands or operations can be added here if needed
 
-                            && echo "Process completed successfully."
-                            && git clone https://github.com/Shubh-8130/node-express-server-rest-api.git \
-                            && cd ~/node-express-server-rest-api \
-                            && sudo apt update -y \
-                            && sudo apt install nodejs npm -y \
-                            && npm install -y \
-                            && npm update -y \
-                            && npm start \
-                            && sleep 10  # Wait for the Node.js process to start (adjust as needed)
+                            echo "Process completed successfully."
+                            git clone https://github.com/Shubh-8130/node-express-server-rest-api.git
+                            cd ~/node-express-server-rest-api
+                            sudo apt update -y
+                            sudo apt install nodejs npm -y
+                            npm install -y
+                            npm update -y
+                            npm start
+                            sleep 10  # Wait for the Node.js process to start (adjust as needed)
                         '
                     """
+                }
+                // Check if the build was successful
+                def nid = sh(script: 'pgrep -x node', returnStdout: true).trim()
+
+                if (nid != "0") {
+                    echo "Build is success"
+                } else {
+                    error "Build failure"
                 }
             }
         }
     }
 }
+
 
