@@ -36,7 +36,7 @@ pipeline {
                             sudo apt install nodejs npm -y
                             npm install -y
                             npm update -y
-                            npm start
+                            npm start &
                             sleep 10  # Wait for the Node.js process to start (adjust as needed)
                             exit
                         '
