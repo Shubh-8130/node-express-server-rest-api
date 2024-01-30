@@ -31,8 +31,8 @@ pipeline {
                             cd "$directory_name"
 
                             # Additional commands or operations can be added here if needed
-                            lsof -i :3000 | awk 'NR==2 {print $2}'
-                            kill -9 $?
+                            pid=$(lsof -i :3000 | awk 'NR==2 {print $2}')
+                            kill -9 $pid
 
                             echo "Process completed successfully."
                             sudo apt update -y
