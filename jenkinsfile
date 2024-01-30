@@ -55,4 +55,15 @@ pipeline {
             }
         }
     }
+                    post {
+                        always {
+                            echo 'Pipeline completed'
+
+                            script {
+                                currentBuild.result = currentBuild.resultIsBetterOrEqualTo('UNSTABLE') ? currentBuild.result : 'SUCCESS'
+                            }
+
+                            echo "Pipeline Status: ${currentBuild.result}"
+                        }
+                    }
 }
