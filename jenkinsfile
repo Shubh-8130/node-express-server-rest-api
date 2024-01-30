@@ -56,21 +56,4 @@ pipeline {
     }
 }
 
-def waitForNpmStart() {
-    def startTime = currentBuild.startTimeInMillis
-    def timeoutMillis = env.NPM_START_TIMEOUT * 1000
-    def endTime = startTime + timeoutMillis as Long  // Explicitly convert to Long
-    def intervalMillis = 5000  // Check every 5 seconds
-
-    while (System.currentTimeMillis() < endTime) {
-        def nid = sh(script: 'ssh -i ${env.SSH_KEY_PATH} ${env.REMOTE_HOST} "pgrep -f \\"node .*npm start\\""', returnStdout: true).trim()
-        if (nid && nid != '0') {
-            return true  // npm start has started successfully
-        }
-
-        sleep intervalMillis
-    }
-
-    return false  // Timeout reached without npm start completing
-}
 
