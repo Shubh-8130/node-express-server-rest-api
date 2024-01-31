@@ -4,7 +4,7 @@ pipeline {
         DIRECTORY_NAME = 'node-express-server-rest-api'
         REPOSITORY_URL = 'https://github.com/Shubh-8130/node-express-server-rest-api.git'
         SSH_KEY_PATH = '/Users/shubhamsharma/jenkins/my-key-terr.pem'
-        REMOTE_HOST = 'ubuntu@107.23.197.248'
+        REMOTE_HOST = 'ubuntu@54.237.95.2'
     }
     stages {
         stage('Build and Deploy') {
@@ -29,15 +29,16 @@ pipeline {
                             echo "Cloning repository into $directory_name"
                             git clone "$repository_url" "$directory_name"
                             cd "$directory_name"
+                            sudo su
+                            yum install git
 
 
                             echo "Process completed successfully."
-                            sudo apt update -y
-                            sudo apt install nodejs npm -y
+                            sudo yum install nodejs npm -y
                             npm install -y
                             npm update -y
-                            nohup npm start &  # Run in the background and detach
-                            disown
+                            nohup npm start   # Run in the background and detach
+                            
                             exit
                         '
                     """
