@@ -27,10 +27,10 @@ pipeline {
 
                             # Clone the repository
                             echo "Cloning repository into $directory_name"
-                            git clone "$repository_url" "$directory_name"
+                            sudo yum install git
+                            sudo git clone "$repository_url" "$directory_name"
                             cd "$directory_name"
                             sudo su
-                            yum install git
 
 
                             echo "Process completed successfully."
