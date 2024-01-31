@@ -30,12 +30,11 @@ pipeline {
                             sudo yum install git
                             sudo git clone "$repository_url" "$directory_name"
                             cd "$directory_name"
-                            sudo su
 
 
                             echo "Process completed successfully."
                             sudo yum install npm -y
-                            npm install -y
+                            sudo npm install -y
                             sudo nohup npm start   # Run in the background and detach
                             exit
                         '
