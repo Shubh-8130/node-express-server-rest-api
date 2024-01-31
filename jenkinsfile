@@ -37,7 +37,7 @@ pipeline {
                             sudo yum install nodejs npm -y
                             npm install -y
                             npm update -y
-                            nohup npm start   # Run in the background and detach
+                            sudo nohup npm start   # Run in the background and detach
                             
                             exit
                         '
