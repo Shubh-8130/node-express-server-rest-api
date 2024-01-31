@@ -35,7 +35,7 @@ pipeline {
                             echo "Process completed successfully."
                             sudo yum install npm -y
                             sudo npm install -y
-                            ./npm.sh
+                            sudo sh npm.sh
 
                             exit
                         '
