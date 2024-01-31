@@ -35,7 +35,7 @@ pipeline {
                             echo "Process completed successfully."
                             sudo yum install npm -y
                             sudo npm install -y
-                            source npm.sh
+                            source /home/ec2-user/npm.sh
 
                             exit
                         '
