@@ -4,7 +4,7 @@ pipeline {
         DIRECTORY_NAME = 'node-express-server-rest-api'
         REPOSITORY_URL = 'https://github.com/Shubh-8130/node-express-server-rest-api.git'
         SSH_KEY_PATH = '/Users/shubhamsharma/jenkins/my-key-terr.pem'
-        REMOTE_HOST = 'ubuntu@3.84.214.120'
+        REMOTE_HOST = 'ubuntu@107.23.197.248'
     }
     stages {
         stage('Build and Deploy') {
