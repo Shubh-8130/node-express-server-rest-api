@@ -37,7 +37,7 @@ pipeline {
                             npm install -y
                             npm update -y
                             nohup npm start &  # Run in the background and detach
-                            sleep 10  # Wait for the Node.js process to start (adjust as needed)
+                            disown
                             exit
                         '
                     """
