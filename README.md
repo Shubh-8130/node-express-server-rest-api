@@ -15,7 +15,7 @@ An easy way to get started with a Express server offering a REST API with Node.j
 - [git](https://www.robinwieruch.de/git-essential-commands/)
 
 ## Installation
-## Test Line
+## Test Line 2
 
 - `git clone git@github.com:rwieruch/node-express-server-rest-api.git`
 - `cd node-express-server-rest-api`
